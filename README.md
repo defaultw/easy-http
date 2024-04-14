@@ -1,2 +1,2 @@
 # easy-http
-A simple medical http client tool
+A simple http client tool
