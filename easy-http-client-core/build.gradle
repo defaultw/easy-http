@@ -9,11 +9,8 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    apacheHttpClientVersion = '4.5.14'
-}
-
 dependencies {
+    implementation('org.apache.httpcomponents:httpclient:' + apacheHttpClientVersion)
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
