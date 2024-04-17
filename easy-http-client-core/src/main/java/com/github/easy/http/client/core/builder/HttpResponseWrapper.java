@@ -26,15 +26,23 @@ public class HttpResponseWrapper {
         return response.getStatusLine().getStatusCode();
     }
 
-    public String getContentAsString() throws IOException {
-        return EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+    public String getContentAsString() {
+        try {
+            return EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Header[] getHeaders() {
         return response.getAllHeaders();
     }
 
-    public void closeResponse() throws IOException {
-        EntityUtils.consume(response.getEntity());
+    public void closeResponse() {
+        try {
+            EntityUtils.consume(response.getEntity());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

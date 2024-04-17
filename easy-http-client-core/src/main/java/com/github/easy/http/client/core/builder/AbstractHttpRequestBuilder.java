@@ -82,8 +82,13 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
         headers.forEach(header -> request.setHeader(header.getName(), header.getValue()));
     }
 
-    public HttpResponseWrapper execute() throws Exception {
-        CloseableHttpResponse response = executeInternal();
+    public HttpResponseWrapper execute() {
+        CloseableHttpResponse response = null;
+        try {
+            response = executeInternal();
+        } catch (Exception e) {
+            logger.error("An error occurs when the [executeInternal] method is executed", e);
+        }
         if (response != null) {
             return new HttpResponseWrapper(response);
         } else {
