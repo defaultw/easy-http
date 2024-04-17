@@ -83,13 +83,12 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
     }
 
     public HttpResponseWrapper execute() throws Exception {
-        try (CloseableHttpResponse response = executeInternal()) {
-            if (response != null) {
-                return new HttpResponseWrapper(response);
-            } else {
-                logger.error("No response received.");
-                return null;
-            }
+        CloseableHttpResponse response = executeInternal();
+        if (response != null) {
+            return new HttpResponseWrapper(response);
+        } else {
+            logger.error("No response received.");
+            return null;
         }
     }
 }
