@@ -11,6 +11,8 @@ repositories {
 
 ext {
     apacheHttpClientVersion = '4.5.14'
+    apacheHttpClientMimeVersion = '4.5.14'
+    slf4jVersion = '1.7.32'
 }
 
 dependencies {

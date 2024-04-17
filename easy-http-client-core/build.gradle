@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     implementation('org.apache.httpcomponents:httpclient:' + apacheHttpClientVersion)
+    implementation('org.apache.httpcomponents:httpmime:' + apacheHttpClientMimeVersion)
+    implementation('org.slf4j:slf4j-api:' + slf4jVersion)
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
