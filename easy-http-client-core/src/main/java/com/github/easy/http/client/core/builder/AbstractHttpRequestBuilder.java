@@ -9,14 +9,13 @@ import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Request请求构建抽象类
+ * Request请求构建
  *
  * @author wangxiaojiang
  * @version v1.0.0
@@ -74,12 +73,19 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
      * 发起请求
      *
      * @return 回执
-     * @throws IOException
      */
     protected abstract CloseableHttpResponse executeInternal() throws Exception;
 
     protected void applyHeaders(HttpRequestBase request) {
         headers.forEach(header -> request.setHeader(header.getName(), header.getValue()));
+    }
+
+    public String executeAsString() {
+        try (CloseableHttpResponse response = executeInternal()) {
+            return new HttpResponseWrapper(response).getContentAsString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public HttpResponseWrapper execute() {
