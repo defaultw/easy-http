@@ -9,14 +9,9 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    apacheHttpClientVersion = '4.5.14'
-    apacheHttpClientMimeVersion = '4.5.14'
-    slf4jVersion = '1.7.32'
-    fastjsonVersion = '2.0.49'
-}
-
 dependencies {
+    implementation project(':easy-http-client-core')
+    implementation('com.alibaba:fastjson:' + fastjsonVersion)
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

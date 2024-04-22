@@ -1,4 +1,4 @@
-package com.github.easy.http.client.core.serialize.service;
+package com.github.easy.http.client.core.serialize;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @version v1.0.0
  * @create 2024/4/18 23:25
  */
-public interface JsonService {
+public interface SerializerService {
 
     /**
      * 对象转json字符串
