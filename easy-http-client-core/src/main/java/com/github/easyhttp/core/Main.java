@@ -1,7 +1,7 @@
-package com.github.easy.http.client.core;
+package com.github.easyhttp.core;
 
-import com.github.easy.http.client.core.serialize.SerializerFactory;
-import com.github.easy.http.client.core.serialize.SerializerService;
+import com.github.easyhttp.common.serializer.SerializerManager;
+import com.github.easyhttp.common.serializer.interfaces.SerializerService;
 
 /**
  * Description
@@ -15,9 +15,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String serializerName = "FastJsonSerializeServiceImpl";
-
-        SerializerService serializer = SerializerFactory.getSerializer(serializerName);
+        SerializerManager serializerManager = new SerializerManager();
+        SerializerService serializer = serializerManager.getSerializer();
 
         Persion persion = new Persion();
         persion.setName("www");

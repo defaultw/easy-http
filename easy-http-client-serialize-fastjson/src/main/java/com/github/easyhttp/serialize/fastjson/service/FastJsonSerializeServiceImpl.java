@@ -1,8 +1,8 @@
-package com.github.easy.http.client.serialize.fastjson.service;
+package com.github.easyhttp.serialize.fastjson.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.easy.http.client.core.serialize.SerializerService;
+import com.github.easyhttp.common.serializer.interfaces.SerializerService;
 
 import java.util.List;
 
@@ -14,6 +14,13 @@ import java.util.List;
  * @create 2024/4/22 22:46
  */
 public class FastJsonSerializeServiceImpl implements SerializerService {
+
+
+    @Override
+    public int getPriority() {
+        return 0;
+    }
+
     @Override
     public String serializeObject(Object object) {
         return JSONObject.toJSONString(object);

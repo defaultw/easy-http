@@ -1,4 +1,4 @@
-package com.github.easy.http.client.core.builder;
+package com.github.easyhttp.core.builder;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;

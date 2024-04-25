@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':easy-http-client-core')
+    implementation project(':easy-http-client-common')
     implementation('com.alibaba:fastjson:' + fastjsonVersion)
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

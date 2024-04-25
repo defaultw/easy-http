@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':easy-http-client-common')
     implementation('org.apache.httpcomponents:httpclient:' + apacheHttpClientVersion)
     implementation('org.apache.httpcomponents:httpmime:' + apacheHttpClientMimeVersion)
     implementation('org.slf4j:slf4j-api:' + slf4jVersion)

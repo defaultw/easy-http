@@ -1,4 +1,4 @@
-package com.github.easy.http.client.core.serialize;
+package com.github.easyhttp.common.serializer.interfaces;
 
 import java.util.List;
 
@@ -10,6 +10,13 @@ import java.util.List;
  * @create 2024/4/18 23:25
  */
 public interface SerializerService {
+
+    /**
+     * 指定实现类优先级
+     *
+     * @return 优先级
+     */
+    int getPriority();
 
     /**
      * 对象转json字符串

@@ -1,4 +1,4 @@
-package com.github.easy.http.client.core.builder;
+package com.github.easyhttp.core.builder;
 
 import org.apache.http.Header;
 import org.apache.http.HttpStatus;
