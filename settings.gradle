@@ -2,4 +2,5 @@ rootProject.name = 'easy-http-client'
 include 'easy-http-client-core'
 include 'easy-http-client-serialize-fastjson'
 include 'easy-http-client-common'
+include 'easy-http-client-test'
 

@@ -12,6 +12,17 @@ import com.github.easyhttp.common.serializer.interfaces.SerializerService;
  */
 public class Main {
 
+    public void printf() {
+        SerializerManager serializerManager = new SerializerManager();
+        SerializerService serializer = serializerManager.getSerializer();
+
+        Persion persion = new Persion();
+        persion.setName("www");
+        persion.setSale("12333");
+
+        System.out.println(serializer.serializeObject(persion));
+    }
+
 
     public static void main(String[] args) {
 
