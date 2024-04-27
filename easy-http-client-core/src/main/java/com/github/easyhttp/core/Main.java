@@ -23,25 +23,7 @@ public class Main {
         System.out.println(serializer.serializeObject(persion));
     }
 
-
-    public static void main(String[] args) {
-
-        SerializerManager serializerManager = new SerializerManager();
-        SerializerService serializer = serializerManager.getSerializer();
-
-        Persion persion = new Persion();
-        persion.setName("www");
-        persion.setSale("12333");
-
-        System.out.println(serializer.serializeObject(persion));
-
-
-    }
-
-
-
-
-
+    
 }
 
 class Persion {
