@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 /**
- * Description
+ * 序列化统一接口
  *
  * @author wangxiaojiang
  * @version v1.0.0
