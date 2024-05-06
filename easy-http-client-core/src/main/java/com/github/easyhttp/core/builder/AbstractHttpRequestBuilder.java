@@ -90,7 +90,7 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
         }
     }
 
-    public <T> T executeAsObject(Class<T> clazz) {
+    public <V> V executeAsObject(Class<V> clazz) {
         SerializerService serializer = new SerializerManager().getSerializer();
         return serializer.deserialize(executeAsString(), clazz);
     }
