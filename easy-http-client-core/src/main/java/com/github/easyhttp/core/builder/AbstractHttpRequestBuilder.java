@@ -1,5 +1,7 @@
 package com.github.easyhttp.core.builder;
 
+import com.github.easyhttp.common.serializer.SerializerManager;
+import com.github.easyhttp.common.serializer.interfaces.SerializerService;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -86,6 +88,11 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public <T> T executeAsObject(Class<T> clazz) {
+        SerializerService serializer = new SerializerManager().getSerializer();
+        return serializer.deserialize(executeAsString(), clazz);
     }
 
     public HttpResponseWrapper execute() {

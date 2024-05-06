@@ -14,12 +14,45 @@ public class GetRequestTest {
 
     public static void main(String[] args) {
 
-        String s = new HttpGetRequestBuilder().uri("http://localhost:8080/easy-http/getTest").executeAsString();
+        System.out.println(new HttpGetRequestBuilder().uri("http://localhost:8080/easy-http/getTest")
+                .queryParam("id", "1").queryParam("code", "CM_12123123").executeAsString());
 
-        System.out.println(s);
+        Person person = new HttpGetRequestBuilder().uri("http://localhost:8080/easy-http/getTest")
+                .queryParam("id", "1").queryParam("code", "CM_12123123").executeAsObject(Person.class);
+
+        System.out.printf("person id: %d, code: %s%n", person.getId(), person.getCode());
 
 
     }
 
 
+}
+
+class Person {
+    private Integer id;
+    private String code;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }
