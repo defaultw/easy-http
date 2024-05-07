@@ -14,6 +14,7 @@ ext {
     apacheHttpClientMimeVersion = '4.5.14'
     slf4jVersion = '1.7.32'
     fastjsonVersion = '2.0.49'
+    gsonVersion = '2.10.1'
 }
 
 dependencies {
