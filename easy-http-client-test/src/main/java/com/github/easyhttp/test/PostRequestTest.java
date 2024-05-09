@@ -21,7 +21,7 @@ public class PostRequestTest {
         System.out.println(new HttpPostRequestBuilder().uri("http://localhost:8080/easy-http/postTest/json")
                 .jsonEntity("{\"id\":1,\"code\":\"postTest-json\"}").executeAsString());
 
-        Map<String, String> formParams = new HashMap<String, String>();
+        Map<String, String> formParams = new HashMap<>(2);
         formParams.put("id", "2");
         formParams.put("code", "postTest-form");
         System.out.println(new HttpPostRequestBuilder().uri("http://localhost:8080/easy-http/postTest/form")
