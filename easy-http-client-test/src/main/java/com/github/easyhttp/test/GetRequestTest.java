@@ -1,6 +1,7 @@
 package com.github.easyhttp.test;
 
 import com.github.easyhttp.core.builder.HttpGetRequestBuilder;
+import com.github.easyhttp.test.bo.Person;
 
 /**
  * Description
@@ -21,37 +22,8 @@ public class GetRequestTest {
                 .queryParam("id", "1").queryParam("code", "CM_12123123").executeAsObject(Person.class);
 
         System.out.printf("person id: %d, code: %s%n", person.getId(), person.getCode());
-        
+
     }
 
 
-}
-
-class Person {
-    private Integer id;
-    private String code;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                '}';
-    }
 }

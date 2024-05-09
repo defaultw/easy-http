@@ -11,8 +11,8 @@ repositories {
 
 dependencies {
     implementation project(':easy-http-client-core')
-//    implementation project(':easy-http-client-serialize-fastjson')
-    implementation project(':easy-http-client-serialize-gson')
+    implementation project(':easy-http-client-serialize-fastjson')
+//    implementation project(':easy-http-client-serialize-gson')
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
