@@ -21,8 +21,7 @@ public class GetRequestTest {
                 .queryParam("id", "1").queryParam("code", "CM_12123123").executeAsObject(Person.class);
 
         System.out.printf("person id: %d, code: %s%n", person.getId(), person.getCode());
-
-
+        
     }
 
 
