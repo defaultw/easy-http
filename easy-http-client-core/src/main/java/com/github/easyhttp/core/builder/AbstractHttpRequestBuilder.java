@@ -82,6 +82,11 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
         headers.forEach(header -> request.setHeader(header.getName(), header.getValue()));
     }
 
+    /**
+     * 发起请求并将结果转换为String返回
+     *
+     * @return 请求结果
+     */
     public String executeAsString() {
         try (CloseableHttpResponse response = executeInternal()) {
             return new HttpResponseWrapper(response).getContentAsString();
@@ -90,9 +95,22 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
         }
     }
 
+    /**
+     * 发起请求并将结果转换为指定类型对象
+     *
+     * @param clazz 指定对象类型
+     * @return 请求结果
+     */
     public <V> V executeAsObject(Class<V> clazz) {
         SerializerService serializer = new SerializerManager().getSerializer();
         return serializer.deserialize(executeAsString(), clazz);
+    }
+
+    /**
+     * 仅发起请求，不返回内容
+     */
+    public void executeAsNull() {
+        executeAsString();
     }
 
     public HttpResponseWrapper execute() {
