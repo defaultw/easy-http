@@ -12,6 +12,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -28,6 +30,8 @@ public class HttpPostRequestBuilder extends AbstractHttpRequestBuilder<HttpPostR
 
     private HttpEntity httpEntity;
 
+    private final List<BasicNameValuePair> formParams = new ArrayList<>();
+
     public HttpPostRequestBuilder() {
         super();
     }
@@ -41,6 +45,16 @@ public class HttpPostRequestBuilder extends AbstractHttpRequestBuilder<HttpPostR
         httpEntity = new UrlEncodedFormEntity(formData.entrySet().stream()
                 .map(entry -> new BasicNameValuePair(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList()), StandardCharsets.UTF_8);
+        return this;
+    }
+
+    public HttpPostRequestBuilder formField(String key, String value) {
+        formParams.add(new BasicNameValuePair(key, value));
+        return this;
+    }
+
+    public HttpPostRequestBuilder formUrlencodedEntity() {
+        httpEntity = new UrlEncodedFormEntity(formParams, StandardCharsets.UTF_8);
         return this;
     }
 

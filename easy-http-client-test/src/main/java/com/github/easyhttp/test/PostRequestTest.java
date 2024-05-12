@@ -27,8 +27,13 @@ public class PostRequestTest {
         System.out.println(new HttpPostRequestBuilder().uri("http://localhost:8080/easy-http/postTest/form")
                 .formUrlencodedEntity(formParams).executeAsString());
 
+        System.out.println(new HttpPostRequestBuilder().uri("http://localhost:8080/easy-http/postTest/form")
+                .formField("id", "112").formField("code", "postTest-form-field").formUrlencodedEntity()
+                .executeAsString());
+
         Person person = new HttpPostRequestBuilder().uri("http://localhost:8080/easy-http/postTest/json")
                 .jsonEntity("{\"id\":1,\"code\":\"postTest-json\"}").executeAsObject(Person.class);
+
         System.out.printf("person id: %d, code: %s%n", person.getId(), person.getCode());
     }
 
