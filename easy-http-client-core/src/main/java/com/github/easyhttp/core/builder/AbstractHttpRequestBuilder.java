@@ -31,6 +31,8 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
 
     protected URI uri;
 
+    private String _uri;
+
     protected RequestConfig requestConfig;
 
     protected List<BasicNameValuePair> headers = new ArrayList<>();
@@ -53,7 +55,12 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
 
     public T uri(String uri) {
         try {
-            this.uri = new URI(uri);
+            _uri = uri;
+            // 有路由参数占位符时先不创建实例
+            String routeParamPrefix = "${";
+            if (!_uri.contains(routeParamPrefix)) {
+                this.uri = new URI(_uri);
+            }
             return (T) this;
         } catch (URISyntaxException e) {
             logger.error("URI syntax exception", e);
@@ -69,6 +76,18 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
     public T queryParam(String key, String value) {
         this.queryParams.add(new BasicNameValuePair(key, value));
         return (T) this;
+    }
+
+    public T routeParam(String key, String value) {
+        _uri = _uri.replace(String.format("${%s}", key), value);
+        uri(_uri);
+        try {
+            this.uri = new URI(_uri);
+            return (T) this;
+        } catch (URISyntaxException e) {
+            logger.error("URI syntax exception", e);
+            throw new RuntimeException("Invalid URL", e);
+        }
     }
 
     /**

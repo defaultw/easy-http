@@ -23,6 +23,9 @@ public class GetRequestTest {
 
         System.out.printf("person id: %d, code: %s%n", person.getId(), person.getCode());
 
+        System.out.println(new HttpGetRequestBuilder().uri("http://localhost:8080/easy-http/getTest/route/${rParam}")
+                .routeParam("rParam", "1").executeAsString());
+
     }
 
 
