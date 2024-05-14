@@ -31,7 +31,7 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
 
     protected URI uri;
 
-    private String _uri;
+    private String uriStr;
 
     protected RequestConfig requestConfig;
 
@@ -55,11 +55,11 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
 
     public T uri(String uri) {
         try {
-            _uri = uri;
+            uriStr = uri;
             // 有路由参数占位符时先不创建实例
             String routeParamPrefix = "${";
-            if (!_uri.contains(routeParamPrefix)) {
-                this.uri = new URI(_uri);
+            if (!uriStr.contains(routeParamPrefix)) {
+                this.uri = new URI(uriStr);
             }
             return (T) this;
         } catch (URISyntaxException e) {
@@ -79,10 +79,10 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
     }
 
     public T routeParam(String key, String value) {
-        _uri = _uri.replace(String.format("${%s}", key), value);
-        uri(_uri);
+        uriStr = uriStr.replace(String.format("${%s}", key), value);
+        uri(uriStr);
         try {
-            this.uri = new URI(_uri);
+            this.uri = new URI(uriStr);
             return (T) this;
         } catch (URISyntaxException e) {
             logger.error("URI syntax exception", e);
