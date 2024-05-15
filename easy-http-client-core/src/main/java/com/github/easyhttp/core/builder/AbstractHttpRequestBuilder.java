@@ -145,6 +145,24 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
     }
 
     /**
+     * 发起异步请求并将结果转换为指定类型对象
+     *
+     * @param clazz    指定对象类型
+     * @param listener 监听是否成功，并继续后续逻辑
+     */
+    public <V> void asyncExecuteAsObject(Class<V> clazz, HttpRequestListener<V> listener) {
+        CompletableFuture<V> future = CompletableFuture.supplyAsync(() -> executeAsObject(clazz));
+        future.whenComplete((result, e) -> {
+            if (e == null) {
+                listener.success(result);
+            }
+        }).exceptionally(e -> {
+            listener.failure(new Exception(e));
+            return null;
+        });
+    }
+
+    /**
      * 仅发起请求，不返回内容
      */
     public void executeAsNull() {
