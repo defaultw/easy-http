@@ -1,6 +1,7 @@
 package com.github.easyhttp.test;
 
 import com.github.easyhttp.core.builder.HttpGetRequestBuilder;
+import com.github.easyhttp.core.listener.HttpRequestListener;
 import com.github.easyhttp.test.bo.Person;
 
 /**
@@ -26,7 +27,27 @@ public class GetRequestTest {
         System.out.println(new HttpGetRequestBuilder().uri("http://localhost:8080/easy-http/getTest/route/${rParam}")
                 .routeParam("rParam", "1").executeAsString());
 
-    }
+        new HttpGetRequestBuilder().uri("http://localhost:8080/easy-http/getTest1")
+                .queryParam("id", "1").queryParam("code", "CM_12123123")
+                .asyncExecuteAsString(new HttpRequestListener<String>() {
+                    @Override
+                    public void success(String data) {
+                        System.out.println("success: " + data);
+                    }
 
+                    @Override
+                    public void failure(Exception e) {
+                        System.out.println("请求失败");
+                        System.out.println(e.getMessage());
+                    }
+                });
+
+        try {
+            Thread.sleep(5000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 }

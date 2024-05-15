@@ -2,6 +2,7 @@ package com.github.easyhttp.core.builder;
 
 import com.github.easyhttp.common.serializer.SerializerManager;
 import com.github.easyhttp.common.serializer.interfaces.SerializerService;
+import com.github.easyhttp.core.listener.HttpRequestListener;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -15,6 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Request请求构建
@@ -112,6 +114,23 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 异步发起请求，并支持回执处理
+     *
+     * @param listener 监听是否成功，并继续后续逻辑
+     */
+    public void asyncExecuteAsString(HttpRequestListener<String> listener) {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(this::executeAsString);
+        future.whenComplete((result, e) -> {
+            if (e == null) {
+                listener.success(result);
+            }
+        }).exceptionally(e -> {
+            listener.failure(new Exception(e));
+            return null;
+        });
     }
 
     /**
