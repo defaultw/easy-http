@@ -169,6 +169,21 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
         executeAsString();
     }
 
+    /**
+     * 异步仅发起请求，不返回内容
+     */
+    public void asyncExecuteAsNull(HttpRequestListener<Void> listener) {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(this::executeAsNull);
+        future.whenComplete((result, e) -> {
+            if (e == null) {
+                listener.success(result);
+            }
+        }).exceptionally(e -> {
+            listener.failure(new Exception(e));
+            return null;
+        });
+    }
+
     public HttpResponseWrapper execute() {
         CloseableHttpResponse response = null;
         try {
