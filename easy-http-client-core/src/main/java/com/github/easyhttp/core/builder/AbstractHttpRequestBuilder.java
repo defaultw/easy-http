@@ -6,22 +6,21 @@ import com.github.easyhttp.core.listener.HttpRequestListener;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -207,39 +206,17 @@ public abstract class AbstractHttpRequestBuilder<T extends AbstractHttpRequestBu
         }
     }
 
-    private TrustManager[] trustAllHttpsCertificates() {
-        TrustManager[] trustManagers = new TrustManager[]{new X509TrustManager() {
-            @Override
-            public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] x509Certificates, String s) {
-            }
-
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return new X509Certificate[]{};
-            }
-        }};
-        return trustManagers;
-    }
-
     public T trustAllHttpsCert() {
         // 参考文档： https://www.cnblogs.com/james-roger/p/15209090.html
-        TrustManager[] trustManagers = trustAllHttpsCertificates();
-        SSLContext sslContext = null;
+        // https://www.cnblogs.com/biehongli/p/15185444.html
         try {
-            sslContext = SSLContext.getInstance(SSLConnectionSocketFactory.SSL);
-        } catch (NoSuchAlgorithmException e) {
+            SSLConnectionSocketFactory scsf = new SSLConnectionSocketFactory(
+                    SSLContexts.custom().loadTrustMaterial(null, new TrustSelfSignedStrategy()).build(),
+                    NoopHostnameVerifier.INSTANCE);
+            httpClient = HttpClients.custom().setSSLSocketFactory(scsf).build();
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {
             throw new RuntimeException(e);
         }
-        try {
-            sslContext.init(null, trustManagers, new SecureRandom());
-        } catch (KeyManagementException e) {
-            throw new RuntimeException(e);
-        }
-        httpClient = HttpClients.custom().setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext)).build();
         return (T) this;
     }
 }

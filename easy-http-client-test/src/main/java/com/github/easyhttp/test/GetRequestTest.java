@@ -27,6 +27,9 @@ public class GetRequestTest {
         System.out.println(new HttpGetRequestBuilder().uri("http://localhost:8080/easy-http/getTest/route/${rParam}")
                 .routeParam("rParam", "1").executeAsString());
 
+        System.out.println(new HttpGetRequestBuilder().trustAllHttpsCert().uri("https://localhost:8443/easy-http/getTest")
+                .queryParam("id", "1").queryParam("code", "https").executeAsString());
+
         new HttpGetRequestBuilder().uri("http://localhost:8080/easy-http/getTest1")
                 .queryParam("id", "1").queryParam("code", "CM_12123123")
                 .asyncExecuteAsString(new HttpRequestListener<String>() {
@@ -38,7 +41,6 @@ public class GetRequestTest {
                     @Override
                     public void failure(Exception e) {
                         System.out.println("请求失败");
-                        System.out.println(e.getMessage());
                     }
                 });
 
