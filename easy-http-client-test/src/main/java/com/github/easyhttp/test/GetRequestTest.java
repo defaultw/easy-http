@@ -30,6 +30,9 @@ public class GetRequestTest {
         System.out.println(new HttpGetRequestBuilder().trustAllHttpsCert().uri("https://localhost:8443/easy-http/getTest")
                 .queryParam("id", "1").queryParam("code", "https").executeAsString());
 
+        // System.out.println(new HttpGetRequestBuilder().createHttpsSSL().uri("https://localhost:8443/easy-http/getTest")
+        //         .queryParam("id", "1").queryParam("code", "https").executeAsString());
+
         new HttpGetRequestBuilder().uri("http://localhost:8080/easy-http/getTest1")
                 .queryParam("id", "1").queryParam("code", "CM_12123123")
                 .asyncExecuteAsString(new HttpRequestListener<String>() {
